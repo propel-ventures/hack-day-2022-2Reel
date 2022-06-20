@@ -6,6 +6,66 @@
 <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 
 
+<script>
+  let treeIndex = 0;
+  window.onload = function () {
+    document
+      .querySelector(".action-button")
+      .addEventListener("click", function () {
+        // next image
+        const gallery = document.querySelector("#gallery");
+        treeIndex = (treeIndex + 1) % 8;
+        gallery.setAttribute('src', `#image${treeIndex}`)
+      });
+  };
+
+  // https://medium.com/swlh/how-to-handle-click-events-on-ar-js-f397ea5994d
+  AFRAME.registerComponent('galleryhandler', {
+    init: function () {
+      // show/hide button
+      var marker = this.el;
+      marker.addEventListener('markerFound', () => {
+        var markerId = marker.id;
+        console.log('! markerFound', markerId);
+
+        let button = document.querySelector(".action-button");
+        button.innerText = 'Next Image';
+        button.style.display = "block";
+      })
+      marker.addEventListener('markerLost', () => {
+        var markerId = marker.id;
+        console.log('! markerLost', markerId);
+        document.querySelector(".action-button").style.display = "none";
+
+      })
+    }
+  });
+</script>
+<style>
+  .buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .action-button {
+    display: none;
+    padding: 0.25em;
+    border-radius: 4px;
+    border: none;
+    background: white;
+    color: black;
+    width: 10em;
+    height: 2em;
+  }
+</style>
+
 <body style="margin : 0px; overflow: hidden;">
   <a-scene embedded arjs='detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_5_5;' cursor="rayOrigin: mouse" detectionMode>
 
@@ -14,10 +74,20 @@
       <!-- <video id="alpha2" loop="true" src="https://arjs-cors-proxy.herokuapp.com/https://ataylor32.github.io/demo-html5-transparent-video/video.webm" autoplay muted></video> -->
       <a-asset-item id="walking_astronaut" src="assets/walking_astronaut/scene.gltf"></a-asset-item>
       <a-asset-item id="space_rocket" src="assets/space_rocket/scene.gltf"></a-asset-item>
-      <!-- <img id="tree0" src="assets/trees/tree0.jpg"> -->
+      <img id="benross" src="assets/gallery/benross.png">
+      <img id="image0" src="assets/gallery/hackday0.jpg">
+      <img id="image1" src="assets/gallery/hackday1.jpg">
+      <img id="image2" src="assets/gallery/hackday2.jpg">
+      <img id="image3" src="assets/gallery/hackday3.jpg">
+      <img id="image4" src="assets/gallery/marty0.jpg">
+      <img id="image5" src="assets/gallery/marty1.jpg">
+      <img id="image6" src="assets/gallery/marty2.jpg">
+      <img id="image7" src="assets/gallery/officeParty0.jpg">
+      <img id="image8" src="assets/gallery/pancake0.jpg">
+      <img id="image9" src="assets/gallery/pancake1.jpg">
     </a-assets>
 
-    <!-- markers -->
+    <!-- markers for astronaut -->
     <a-marker type="barcode" value="13" smooth="true">
       <a-entity text="font: mozillavr; value: Welcome to Propel; width: 40" position="12 -2 -13" rotation="-90 0 0"></a-entity>
       <a-entity position="0 0 0" scale="4 4 4" rotation="-30 90 270"
@@ -28,13 +98,28 @@
         gltf-model="#space_rocket"
         animation-mixer>
       </a-entity>
+      <a-image id="ben" src="#benross" scale="2.5 2.5 2.5" position="1.1 1.8 -9.6" rotation="-61 67 -77"></a-image>
+    </a-marker>
+
+    <!-- marker for gallery -->
+    <a-marker id="gallery-marker" type="barcode" value="14" smooth="true"  smoothCount="100" smoothTolerance="1" smoothThreshold="100" galleryhandler>
+      <a-image id="gallery" src="#image0" scale="7.5 5 1" position="0 2 3" rotation="-90 0 0"></a-image>
+    </a-marker>
+
+    <!-- marker for kitchen -->
+    <a-marker id="gallery-marker" type="barcode" value="11" smooth="true" smoothCount="100" smoothTolerance="1" smoothThreshold="100" galleryhandler>
+      <a-image id="kitchen" src="#image8" scale="7.5 5 1" position="0 2 3" rotation="-90 0 0"></a-image>
     </a-marker>
 
 
-    0 12 -8
+
 
     <a-entity camera></a-entity>
   </a-scene>
+
+  <div class="buttons">
+    <button class="action-button">Hi</button>
+  </div>  
 </body>
 
 </html>
