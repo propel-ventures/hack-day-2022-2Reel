@@ -5,8 +5,32 @@
 <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 
+
 <body style="margin : 0px; overflow: hidden;">
   <a-scene embedded arjs='detectionMode: mono_and_matrix; matrixCodeType: 4x4_BCH_13_5_5;' cursor="rayOrigin: mouse" detectionMode>
+
+    <!-- assets -->
+    <a-assets>
+      <!-- <video id="alpha2" loop="true" src="https://arjs-cors-proxy.herokuapp.com/https://ataylor32.github.io/demo-html5-transparent-video/video.webm" autoplay muted></video> -->
+      <a-asset-item id="walking_astronaut" src="assets/walking_astronaut/scene.gltf"></a-asset-item>
+      <a-asset-item id="space_rocket" src="assets/space_rocket/scene.gltf"></a-asset-item>
+      <!-- <img id="tree0" src="assets/trees/tree0.jpg"> -->
+    </a-assets>
+
+    <!-- markers -->
+    <a-marker type="barcode" value="13" smooth="true">
+      <a-entity position="0 0 0" scale="4 4 4" rotation="-30 90 270"
+        gltf-model="#walking_astronaut"
+        animation-mixer>
+      </a-entity>
+      <a-entity position="3.5 3.5 -6" scale="1 1 1" rotation="-90 45 0" animation="property: position; to:  0 12 -8; dur: 2000; easing: easeInQuad; loop: true; dir: alternate"
+        gltf-model="#space_rocket"
+        animation-mixer>
+      </a-entity>
+    </a-marker>
+
+
+    0 12 -8
 
     <a-entity camera></a-entity>
   </a-scene>
