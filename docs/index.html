@@ -7,15 +7,21 @@
 
 
 <script>
-  let treeIndex = 0;
+  let galleryImageIndex = 0;
+  let kitchenImageIndex = 0;
   window.onload = function () {
     document
       .querySelector(".action-button")
       .addEventListener("click", function () {
-        // next image
+        // next image for gallery
         const gallery = document.querySelector("#gallery");
-        treeIndex = (treeIndex + 1) % 8;
-        gallery.setAttribute('src', `#image${treeIndex}`)
+        galleryImageIndex = (galleryImageIndex + 1) % 8;
+        gallery.setAttribute('src', `#image${galleryImageIndex}`)
+
+        // next image for ki
+        const kitchen = document.querySelector("#kitchen");
+        kitchenImageIndex = (kitchenImageIndex + 1) % 2;
+        kitchen.setAttribute('src', `#kitchen${kitchenImageIndex}`)
       });
   };
 
@@ -83,8 +89,8 @@
       <img id="image5" src="assets/gallery/marty1.jpg">
       <img id="image6" src="assets/gallery/marty2.jpg">
       <img id="image7" src="assets/gallery/officeParty0.jpg">
-      <img id="image8" src="assets/gallery/pancake0.jpg">
-      <img id="image9" src="assets/gallery/pancake1.jpg">
+      <img id="kitchen0" src="assets/gallery/pancake0.jpg">
+      <img id="kitchen1" src="assets/gallery/pancake1.jpg">
     </a-assets>
 
     <!-- markers for astronaut -->
@@ -108,7 +114,7 @@
 
     <!-- marker for kitchen -->
     <a-marker id="gallery-marker" type="barcode" value="11" smooth="true" smoothCount="100" smoothTolerance="1" smoothThreshold="100" galleryhandler>
-      <a-image id="kitchen" src="#image8" scale="7.5 5 1" position="0 2 3" rotation="-90 0 0"></a-image>
+      <a-image id="kitchen" src="#kitchen0" scale="7.5 5 1" position="0 2 3" rotation="-90 0 0"></a-image>
     </a-marker>
 
 
